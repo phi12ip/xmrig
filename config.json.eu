@@ -5,10 +5,11 @@
     "cuda": false,
     "pools": [
         {
-            "coin": "monero",
-            "url": "xmr-us-east1.nanopool.org:14433",
+            "url": "xmrpool.eu:9999",
             "user": "42rwcT64pj3iVqfgaJ7J4NYSJ313E1PhJ1RCYMLdNQrR9BqjCbs9bsNbtKPNFJXrjU5j8NQrZ2xJ24ah51eUz4M3N2nF33P",
+            "keepalive": true,
             "tls": true
         }
     ]
 }
+
