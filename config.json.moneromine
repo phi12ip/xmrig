@@ -5,7 +5,7 @@
     "cuda": false,
     "pools": [
         {
-            "url": "	us1.moneromine.co:4444",
+            "url": "us1.moneromine.co:4444",
             "user": "42rwcT64pj3iVqfgaJ7J4NYSJ313E1PhJ1RCYMLdNQrR9BqjCbs9bsNbtKPNFJXrjU5j8NQrZ2xJ24ah51eUz4M3N2nF33P",
             "keepalive": true,
             "tls": true
