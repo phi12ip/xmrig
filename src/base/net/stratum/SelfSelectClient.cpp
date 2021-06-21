@@ -20,7 +20,6 @@
 
 
 #include "base/net/stratum/SelfSelectClient.h"
-#include "3rdparty/http-parser/http_parser.h"
 #include "3rdparty/rapidjson/document.h"
 #include "3rdparty/rapidjson/error/en.h"
 #include "base/io/json/Json.h"
@@ -131,12 +130,17 @@ bool xmrig::SelfSelectClient::parseResponse(int64_t id, rapidjson::Value &result
         }
     }
 
-    if (!m_job.setBlob(result[kBlockhashingBlob].GetString())) {
-        return false;
+    const char *blobData = Json::getString(result, kBlockhashingBlob);
+    if (pool().coin().isValid()) {
+        uint8_t blobVersion = 0;
+        if (blobData) {
+            Cvt::fromHex(&blobVersion, 1, blobData, 2);
+        }
+        m_job.setAlgorithm(pool().coin().algorithm(blobVersion));
     }
 
-    if (pool().coin().isValid()) {
-        m_job.setAlgorithm(pool().coin().algorithm(m_job.blob()[0]));
+    if (!m_job.setBlob(blobData)) {
+        return false;
     }
 
     m_job.setHeight(Json::getUint64(result, kHeight));
@@ -288,7 +292,7 @@ void xmrig::SelfSelectClient::submitOriginDaemon(const JobResult& result)
 
 void xmrig::SelfSelectClient::onHttpData(const HttpData &data)
 {
-    if (data.status != HTTP_STATUS_OK) {
+    if (data.status != 200) {
         return retry();
     }
 

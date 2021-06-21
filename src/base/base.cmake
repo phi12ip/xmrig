@@ -32,6 +32,7 @@ set(HEADERS_BASE
     src/base/kernel/interfaces/IConfigListener.h
     src/base/kernel/interfaces/IConfigTransform.h
     src/base/kernel/interfaces/IConsoleListener.h
+    src/base/kernel/interfaces/IDnsBackend.h
     src/base/kernel/interfaces/IDnsListener.h
     src/base/kernel/interfaces/ILineListener.h
     src/base/kernel/interfaces/ILogBackend.h
@@ -43,7 +44,11 @@ set(HEADERS_BASE
     src/base/kernel/Platform.h
     src/base/kernel/Process.h
     src/base/net/dns/Dns.h
+    src/base/net/dns/DnsConfig.h
     src/base/net/dns/DnsRecord.h
+    src/base/net/dns/DnsRecords.h
+    src/base/net/dns/DnsRequest.h
+    src/base/net/dns/DnsUvBackend.h
     src/base/net/http/Http.h
     src/base/net/http/HttpListener.h
     src/base/net/stratum/BaseClient.h
@@ -99,7 +104,10 @@ set(SOURCES_BASE
     src/base/kernel/Platform.cpp
     src/base/kernel/Process.cpp
     src/base/net/dns/Dns.cpp
+    src/base/net/dns/DnsConfig.cpp
     src/base/net/dns/DnsRecord.cpp
+    src/base/net/dns/DnsRecords.cpp
+    src/base/net/dns/DnsUvBackend.cpp
     src/base/net/http/Http.cpp
     src/base/net/stratum/BaseClient.cpp
     src/base/net/stratum/Client.cpp
@@ -160,7 +168,7 @@ endif()
 
 if (WITH_HTTP)
     set(HEADERS_BASE_HTTP
-        src/3rdparty/http-parser/http_parser.h
+        src/3rdparty/llhttp/llhttp.h
         src/base/api/Api.h
         src/base/api/Httpd.h
         src/base/api/interfaces/IApiRequest.h
@@ -181,7 +189,9 @@ if (WITH_HTTP)
         )
 
     set(SOURCES_BASE_HTTP
-        src/3rdparty/http-parser/http_parser.c
+        src/3rdparty/llhttp/llhttp.c
+        src/3rdparty/llhttp/api.c
+        src/3rdparty/llhttp/http.c
         src/base/api/Api.cpp
         src/base/api/Httpd.cpp
         src/base/api/requests/ApiRequest.cpp
